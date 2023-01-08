@@ -1,5 +1,6 @@
 # Obscurus.ghost 1.1
-=
+
+
 Just another POC logger using discord webhooks 
 =
 
