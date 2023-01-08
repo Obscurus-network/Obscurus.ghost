@@ -8,7 +8,7 @@ Just another POC logger using discord webhooks
 - Using requests to send data over to discord webhook
 - Why would you even use this? 
 - This is just a project for me to try and learn python
-- Is just WIP, dont expect much
+- Is WIP, dont expect much
 
 Future plans:
 =
