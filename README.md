@@ -23,8 +23,11 @@ But i want to add these features:
 and maybe reverse shell function
 
 
-!IF YOU DECIDE TO USE THIS, I AM WARNING YO. JUST PLEASE, DONT!
+!IF YOU DECIDE TO USE THIS, I AM WARNING YOU, JUST PLEASE, DONT!
+=
+
 Using this logger can cause permanent brain damage. 
 Also, please dont use this for malicious purposes
+
 
 Bye -burnt.chipset
