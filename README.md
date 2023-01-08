@@ -13,7 +13,8 @@ Just another POC logger using discord webhooks
 Future plans:
 =
 I might continue and update this repo once in a while.
-But i want to add these features:
+But i want to add these features
+
       -browser password grabber
       -self destrucion
       -network mapper
