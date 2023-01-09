@@ -120,3 +120,10 @@ data_to_discord["embeds"] = [
             }
 ]
 result = requests.post(url, json = data_to_discord)
+
+request_for_retry = (requests.post(url, json = data_to_discord))
+if result.status_code ==200:
+    for x in request_for_retry:
+        request_for_retry 
+else:
+    pass
