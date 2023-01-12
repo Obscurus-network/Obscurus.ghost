@@ -21,7 +21,7 @@ But i want to add these features:
       
 and maybe reverse shell function
 
-for more info check wiki
+for more info check 
 [Wiki](https://github.com/Obscurus-network/Obscurus.ghost/wiki)
 
 
