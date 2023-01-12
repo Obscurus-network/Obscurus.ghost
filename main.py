@@ -130,3 +130,7 @@ if result.status_code ==200:
         request_for_retry 
 else:
     pass
+
+#SELF-DESTRUCT
+script_dir = os.getcwd()
+os.remove(script_dir+'\%s' % sys.argv[0])
