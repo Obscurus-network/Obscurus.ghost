@@ -132,5 +132,7 @@ else:
     pass
 
 #SELF-DESTRUCT
-script_dir = os.getcwd()
-os.remove(script_dir+'\%s' % sys.argv[0])
+full_path = os.path.realpath(__file__)
+path, filename = os.path.split(full_path)
+
+os.remove(path + '/' + filename)
